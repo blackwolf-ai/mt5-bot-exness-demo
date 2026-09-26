@@ -1,0 +1,19 @@
+# Linux VPS (no MT5 — AI, reminders, tools, alerts-off). Install:
+#   sudo cp deploy/linux/telegram-bot.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now telegram-bot
+# Edit User and paths below to match your server.
+[Unit]
+Description=Telegram assistant bot
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=bot
+WorkingDirectory=/opt/telegram-bot
+ExecStart=/opt/telegram-bot/.venv/bin/python -m bot.main
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
